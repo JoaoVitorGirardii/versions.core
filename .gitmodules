@@ -1,0 +1,9 @@
+[submodule "versions.login"]
+	path = versions.login
+	url = https://github.com/JoaoVitorGirardii/versions.login
+[submodule "versions.auth"]
+	path = versions.auth
+	url = https://github.com/JoaoVitorGirardii/versions.auth
+[submodule "versions.usuarios"]
+	path = versions.usuarios
+	url = https://github.com/JoaoVitorGirardii/versions.usuarios
