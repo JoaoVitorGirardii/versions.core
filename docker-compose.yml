@@ -1,0 +1,38 @@
+services:
+  auth:
+    build: ./versions.auth
+    networks:
+      - core-network
+    command: "npm run start:prod"
+    environment:
+      - PORT=3001
+      - HOST=127.0.0.1
+      - USUARIO_SERVICE_PORT=3002
+      - USUARIO_SERVICE_HOST=127.0.0.1
+  
+  usuarios:
+    build: ./versions.usuarios
+    environment:
+      - DATABASE_URL=file:./dev.db
+      - PORT=3002
+      - HOST=127.0.0.1
+    networks:
+      - core-network
+    command: "npm run start:prod"
+  
+  login:
+    build: ./versions.login
+    networks:
+      - core-network
+    environment:
+      - PORT=3000
+      - AUTH_SERVICE_PORT=3001
+      - AUTH_SERVICE_HOST=127.0.0.1
+      - USUARIO_SERVICE_PORT=3002
+      - USUARIO_SERVICE_HOST=127.0.0.1
+    ports:
+      - "3000:3000"
+
+networks:
+  core-network:
+    driver: bridge 
