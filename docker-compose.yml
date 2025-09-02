@@ -1,35 +1,38 @@
 services:
   auth:
     build: ./versions.auth
+    container_name: auth-service
     networks:
       - core-network
     command: "npm run start:prod"
     environment:
       - PORT=3001
-      - HOST=127.0.0.1
+      - HOST=0.0.0.0
       - USUARIO_SERVICE_PORT=3002
-      - USUARIO_SERVICE_HOST=127.0.0.1
+      - USUARIO_SERVICE_HOST=usuarios-service
   
   usuarios:
     build: ./versions.usuarios
+    container_name: usuarios-service
     environment:
       - DATABASE_URL=file:./dev.db
       - PORT=3002
-      - HOST=127.0.0.1
+      - HOST=0.0.0.0
     networks:
       - core-network
     command: "npm run start:prod"
   
   login:
     build: ./versions.login
+    container_name: login-service
     networks:
       - core-network
     environment:
       - PORT=3000
       - AUTH_SERVICE_PORT=3001
-      - AUTH_SERVICE_HOST=127.0.0.1
+      - AUTH_SERVICE_HOST=auth-service
       - USUARIO_SERVICE_PORT=3002
-      - USUARIO_SERVICE_HOST=127.0.0.1
+      - USUARIO_SERVICE_HOST=usuarios-service
     ports:
       - "3000:3000"
 
